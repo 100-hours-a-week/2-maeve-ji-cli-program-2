@@ -1,3 +1,5 @@
+package src;
+
 public class Player extends Character {
     private String job;
     private final int MAX_HP = 100;  // 플레이어 최대 HP

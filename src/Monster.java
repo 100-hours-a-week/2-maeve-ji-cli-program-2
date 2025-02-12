@@ -1,3 +1,5 @@
+package src;
+
 public class Monster extends Character {
     private int expDrop;
     private Item dropItem;

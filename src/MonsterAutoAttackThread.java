@@ -1,3 +1,5 @@
+package src;
+
 public class MonsterAutoAttackThread extends Thread {
     private final long autoAttackInterval; // ← 몬스터별 자동공격 간격
     private volatile boolean running = true;

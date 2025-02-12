@@ -1,3 +1,5 @@
+package src;
+
 public class Entity {
     protected String name;
     protected int hp, attack;

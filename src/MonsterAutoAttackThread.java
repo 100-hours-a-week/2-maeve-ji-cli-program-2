@@ -1,12 +1,12 @@
 package src;
 
 public class MonsterAutoAttackThread extends Thread {
-    private final long autoAttackInterval; // ← 몬스터별 자동공격 간격
+    private final long autoAttackInterval; // 몬스터별 자동공격 간격
     private volatile boolean running = true;
     private final Monster monster;
     private final Player player;
 
-    // 플레이어가 마지막으로 행동(입력)한 시각
+    // 플레이어의 행동 잡히는 시간 확인
     private volatile long lastPlayerActionTime;
 
     public MonsterAutoAttackThread(Monster monster, Player player, long autoAttackInterval) {
@@ -16,7 +16,7 @@ public class MonsterAutoAttackThread extends Thread {
         this.lastPlayerActionTime = System.currentTimeMillis();
     }
 
-    // 플레이어가 행동할 때마다 GameManager에서 호출해서 시간을 갱신
+    // 플레이어가 행동할 때마다 시간을 갱신
     public void updateLastActionTime() {
         this.lastPlayerActionTime = System.currentTimeMillis();
     }
@@ -34,14 +34,13 @@ public class MonsterAutoAttackThread extends Thread {
                 e.printStackTrace();
             }
 
-            // 누군가 죽었으면 종료
+            // 플레이어 or 몬스터 죽었으면 종료
             if (!player.isAlive() || !monster.isAlive()) {
                 stopThread();
                 break;
             }
 
             long now = System.currentTimeMillis();
-            // 마지막 행동 이후 autoAttackInterval(7/5/3초) 지났는지 확인
             if (now - lastPlayerActionTime >= autoAttackInterval) {
                 System.out.println("\n----------- 몬스터 자동 공격! -----------");
                 System.out.println("[AutoAttack] " + monster.getName() + "이(가) 자동 공격을 시도합니다!");
@@ -54,7 +53,7 @@ public class MonsterAutoAttackThread extends Thread {
                     break;
                 }
 
-                // 공격 후에는 타이머 리셋
+                // 공격 후에는 타이머 초기화
                 lastPlayerActionTime = System.currentTimeMillis();
                 System.out.println("----------------------------------------\n");
             }
